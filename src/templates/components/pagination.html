@@ -1,0 +1,107 @@
+{% if pagination and pagination.total > 0 %}
+<div class="pagination-wrapper px-3 py-3 border-top bg-light-subtle">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+
+        <div class="small text-muted">
+            Mostrando
+            <strong>{{ pagination.first_item }}</strong>
+            -
+            <strong>{{ pagination.last_item }}</strong>
+            de
+            <strong>{{ pagination.total }}</strong>
+            registros
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            <label for="per-page" class="small text-muted text-nowrap">Registros:</label>
+            <select id="per-page"
+                    class="form-select form-select-sm"
+                    style="width: 82px;"
+                    onchange="changePerPage(this.value)">
+                {% for option in [5, 10, 20, 50, 100] %}
+                    <option value="{{ option }}"
+                            {% if pagination.per_page == option %}selected{% endif %}>
+                        {{ option }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <nav aria-label="Paginación">
+            <ul class="pagination pagination-sm mb-0">
+
+                <li class="page-item {% if not pagination.has_previous %}disabled{% endif %}">
+                    {% if pagination.has_previous %}
+                        <a class="page-link"
+                           href="{{ url_for(request.endpoint, page=1, per_page=pagination.per_page) }}"
+                           aria-label="Primera página">
+                            <i class="bi bi-chevron-double-left"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link"><i class="bi bi-chevron-double-left"></i></span>
+                    {% endif %}
+                </li>
+
+                <li class="page-item {% if not pagination.has_previous %}disabled{% endif %}">
+                    {% if pagination.has_previous %}
+                        <a class="page-link"
+                           href="{{ url_for(request.endpoint, page=pagination.previous_page, per_page=pagination.per_page) }}">
+                            <i class="bi bi-chevron-left me-1"></i>Anterior
+                        </a>
+                    {% else %}
+                        <span class="page-link"><i class="bi bi-chevron-left me-1"></i>Anterior</span>
+                    {% endif %}
+                </li>
+
+                {% for number in pagination.pages %}
+                    {% if number is none %}
+                        <li class="page-item disabled">
+                            <span class="page-link">…</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item {% if number == pagination.page %}active{% endif %}">
+                            <a class="page-link"
+                               href="{{ url_for(request.endpoint, page=number, per_page=pagination.per_page) }}">
+                                {{ number }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    {% if pagination.has_next %}
+                        <a class="page-link"
+                           href="{{ url_for(request.endpoint, page=pagination.next_page, per_page=pagination.per_page) }}">
+                            Siguiente<i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link">Siguiente<i class="bi bi-chevron-right ms-1"></i></span>
+                    {% endif %}
+                </li>
+
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    {% if pagination.has_next %}
+                        <a class="page-link"
+                           href="{{ url_for(request.endpoint, page=pagination.total_pages, per_page=pagination.per_page) }}"
+                           aria-label="Última página">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link"><i class="bi bi-chevron-double-right"></i></span>
+                    {% endif %}
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endif %}
+
+<script>
+function changePerPage(value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", "1");
+    url.searchParams.set("per_page", value);
+    window.location.href = url.toString();
+}
+</script>
