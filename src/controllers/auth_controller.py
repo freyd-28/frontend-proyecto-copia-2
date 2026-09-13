@@ -4,7 +4,8 @@ from src.clients.api_client import APIClient, APIError
 
 auth_bp = Blueprint("auth", __name__)
 
-
+#Antes de permitir que el usuario entre a una ruta, verifica si inició sesión. Si no, lo manda al login 
+# esta es una validacion para ingresar
 def login_required(view):
     @wraps(view)
     def wrapper(*args, **kwargs):
@@ -39,7 +40,7 @@ def cerrar_sesion(mensaje=None, categoria="info"):
 def sesion_expirada():
     return cerrar_sesion("Tu sesión expiró. Ingresa de nuevo.", "warning")
 
-
+#controlador de login, logout, registro y perfil de usuario
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if session.get("api_token"):
@@ -51,12 +52,12 @@ def login():
         if not email or not password:
             flash("Correo y contraseña son obligatorios.", "danger")
             return render_template("auth/login.html", email=email)
-
+#comunicacion con el backend para validar el login del usuario, si es correcto se guarda en la sesion y se redirige al dashboard
         try:
             data = APIClient().post("/auth/login", json={"email": email, "password": password})
             token = data.get("access_token")
             usuario = data.get("usuario")
-            if not token or not usuario:
+            if not token or not usuario:  #segunda validacion para verificar que el backend devolvio un token y un usuario valido
                 raise APIError("El backend no devolvió una sesión válida.")
             session["api_token"] = token
             session["usuario"] = usuario
