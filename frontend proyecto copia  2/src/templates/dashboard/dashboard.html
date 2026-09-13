@@ -1,0 +1,48 @@
+{% extends "layout/layout.html" %}
+
+{% block title %}Dashboard | BilleterAPP{% endblock %}
+
+{% block contenido %}
+<header class="p-4 bg-white border rounded shadow-sm mb-4">
+    <h1 class="h3 fw-bold mb-1">Dashboard</h1>
+    <p class="text-muted m-0">Resumen operativo general de BilleterAPP.</p>
+</header>
+
+<div class="row g-3">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card p-4 border shadow-sm h-100">
+            <div class="text-muted small text-uppercase fw-bold">Facturación</div>
+            <div class="h3 fw-bold mt-2 mb-0">$ {{ "{:,.2f}".format(total_facturacion) }}</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card p-4 border shadow-sm h-100">
+            <div class="text-muted small text-uppercase fw-bold">Clientes</div>
+            <div class="h3 fw-bold mt-2 mb-0">{{ total_clientes }}</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card p-4 border shadow-sm h-100">
+            <div class="text-muted small text-uppercase fw-bold">Productos</div>
+            <div class="h3 fw-bold mt-2 mb-0">{{ total_productos }}</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card p-4 border shadow-sm h-100">
+            <div class="text-muted small text-uppercase fw-bold">Facturas</div>
+            <div class="h3 fw-bold mt-2 mb-0">{{ total_facturas }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card border shadow-sm mt-4">
+    <div class="card-body">
+        <h2 class="h5 fw-bold">Accesos rápidos</h2>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary" href="{{ url_for('facturas.nueva_factura') }}"><i class="bi bi-plus-lg me-1"></i>Nueva factura</a>
+            <a class="btn btn-outline-primary" href="{{ url_for('productos.nuevo_producto') }}">Nuevo producto</a>
+            <a class="btn btn-outline-primary" href="{{ url_for('clientes.nuevo_cliente') }}">Nuevo cliente</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

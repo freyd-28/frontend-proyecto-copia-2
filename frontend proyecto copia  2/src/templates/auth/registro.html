@@ -1,0 +1,38 @@
+{% extends "layout/layout.html" %}
+
+{% block title %}Crear cuenta | BilleterAPP{% endblock %}
+
+{% block contenido %}
+<div class="auth-page">
+    <div class="auth-card card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5">
+            <h1 class="h4 fw-bold mb-1">Crear cuenta</h1>
+            <p class="text-muted mb-4">Registra un acceso para BilleterAPP.</p>
+            
+            <form method="POST" action="{{ url_for('auth.registro') }}">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input name="nombre" class="form-control" value="{{ datos.nombre or '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correo</label>
+                    <input type="email" name="email" class="form-control" value="{{ datos.email or '' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Confirmar contraseña</label>
+                    <input type="password" name="password_confirmacion" class="form-control" required>
+                </div>
+                <button class="btn btn-primary w-100">Crear cuenta</button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <a href="{{ url_for('auth.login') }}">Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

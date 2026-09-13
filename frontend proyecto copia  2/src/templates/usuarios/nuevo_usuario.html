@@ -1,0 +1,46 @@
+{% extends "layout/layout.html" %}
+{% block contenido %}
+<div class="container p-4" style="max-width: 600px;">
+  <div class="card p-4 shadow-sm border">
+    <h2 class="fw-bold mb-4">Crear Cuenta de Usuario</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('usuarios.nuevo_usuario') }}">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nombre Completo</label>
+        <input type="text" name="nombre" class="form-control" value="{{ usuario.get('nombre','') }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nombre de Usuario</label>
+        <input type="text" name="nombre_usuario" class="form-control" value="{{ usuario.get('nombre_usuario','') }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Correo electrónico</label>
+        <input type="email" name="email" class="form-control" value="{{ usuario.get('email','') }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Rol Asignado</label>
+        <select name="rol" class="form-select">
+          <option value="Vendedor">Vendedor</option>
+          <option value="Administrador">Administrador</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Clave de Acceso</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success fw-medium">Dar de Alta</button>
+        <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-secondary fw-medium">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

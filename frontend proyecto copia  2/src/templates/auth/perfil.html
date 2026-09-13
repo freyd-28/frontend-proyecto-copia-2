@@ -1,0 +1,43 @@
+{% extends "layout/layout.html" %}
+{% block title %}Mi perfil | BilleterAPP{% endblock %}
+{% block contenido %}
+
+<div class="container-fluid px-0">
+    
+  <div class="card border shadow-sm" style="max-width:760px">
+        
+     <div class="card-body p-4">
+            <h1 class="h4 fw-bold">Mi perfil</h1>
+            <p class="text-muted">Informacion de la sesion actual.</p>
+
+          <div class="row g-3">
+              <div class="col-md-6">
+                 <label class="form-label text-muted">Nombre</label>
+                  <div class="form-control bg-light">{{ usuario.get('nombre','') }} </div>
+
+              </div>
+              <div class="col-md-6">
+                  <label class="form-label text-muted">Usuario</label>
+                  <div class="form-control bg-light">{{ usuario.get('nombre_usuario','') }}</div>
+              </div>
+
+              <div class="col-md-6">
+                  <label class="form-label text-muted">Correo</label>
+                  <div class="form-control bg-light">{{ usuario.get('email','') }}</div>
+              </div>
+              
+              <div class="col-md-6">
+                  <label class="form-label text-muted">Rol</label>
+                  <div class="form-control bg-light">{{ usuario.get('rol','') }}</div>
+              </div>
+
+         </div>
+     </div>
+
+
+ </div>
+
+
+
+</div>
+{% endblock %}
